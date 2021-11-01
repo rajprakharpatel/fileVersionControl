@@ -9,8 +9,7 @@ router.get('/', function(req, res, next) {
 	// mongodb connection
 	const connection = connectDB();
 	if (connection) {
-		res.send('Hello ')
-		return
+		console.log('Hello ');
 	}
 	res.sendFile(path.resolve('./public/html/dashboard.html'), { title: 'Express' });
 });
