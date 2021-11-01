@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Cloud Computing Project</title>
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css" integrity="sha512-YWzhKL2whUzgiheMoBFwW8CKV4qpHQAEuvilg9FAn5VJUDwKZZxkJNuGM4XkWuk94WCrrwslk8yWNGmY1EduTA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+		<link rel="stylesheet" type="text/css" href="stylesheets/style.css"/>
+  </head>
+  <body>
+    <div class="upload-container">
+      <div class="drop-zone">
+        <div class="icon-container">
+          <img
+            src="https://raw.githubusercontent.com/ShivamJoker/InShare/master/file.svg"
+            alt="File Icon"
+            class="center"
+            draggable="false"
+          />
+          <img
+            src="https://raw.githubusercontent.com/ShivamJoker/InShare/master/file.svg"
+            alt="File Icon"
+            class="left"
+            draggable="false"
+          />
+          <img
+            src="https://raw.githubusercontent.com/ShivamJoker/InShare/master/file.svg"
+            alt="File Icon"
+            class="right"
+            draggable="false"
+          />
+        </div>
+        <input type="file" id="fileInput" />
+        <div class="title">
+          Drop your Files Here or, <span class="browseBtn">Browse</span>
+        </div>
+      </div>
+
+      <div class="progress-container">
+        <div class="bg-progress"></div>
+        <div class="inner-container">
+          <div class="title">Uploading...</div>
+          <div class="percent-container"><span id="percent">0</span>%</div>
+          <div class="progress-bar"></div>
+        </div>
+      </div>
+    </div>
+    <script type="module" src="./javascripts/index.js"></script>
+  </body>
+</html>
