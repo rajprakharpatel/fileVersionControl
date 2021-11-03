@@ -35,7 +35,7 @@ app.use(cookieParser());
 // mongodb connection
 connectDB()
   .then(() => {
-    console.log("Connectedd to database");
+    console.log("Connected to database");
   })
   .catch(() => {
     console.log("Cant connect to Database");

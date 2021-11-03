@@ -1,16 +1,11 @@
 const mongoose = require('mongoose')
 mongoose.Promise = global.Promise;
-const dotenv = require('dotenv')
-
-const result = dotenv.config({ path: 'config.env' })
-if (result.error) {
-	console.log(result.error);
-}
+const env = require('../../config/env')
 
 async function connectDB() {
 	// mongodb connection string
 	try {
-		const res = await mongoose.connect(process.env.COSMOS_DB_URI, {
+		const res = await mongoose.connect(env.COSMOS_DB_URI, {
 			useNewUrlParser: true,
 			useUnifiedTopology: true,
 		});
