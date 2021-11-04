@@ -18,8 +18,8 @@ router.post("/login", (req, res) => {
     req.body.password == credential.password
   ) {
     req.session.user = req.body.email;
-    //res.redirect('/dashboard');
-    res.end("Login Successful!");
+    res.redirect('/dashboard');
+    // res.end("Login Successful!");
   } else {
     res.end("Invalid Username");
   }

@@ -8,7 +8,7 @@ var logger = require("morgan");
 var dashboardRouter = require("./routes/dashboard");
 var loginRouter = require("./routes/login");
 const connectDB = require("./server/database/connection");
-const bodyParser = require("body-parser");
+// const bodyParser = require("body-parser");
 const { v4: uuidv4 } = require("uuid");
 
 var app = express();
@@ -17,8 +17,8 @@ var app = express();
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "ejs");
 
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
+// app.use(bodyParser.json());
+// app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use(
   session({
@@ -27,9 +27,10 @@ app.use(
     saveUninitialized: true,
   })
 );
-app.use(logger("tiny"));
-// app.use(express.json());
-// app.use(express.urlencoded({ extended: false }));
+
+app.use(logger('combined'));
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 
 // mongodb connection
