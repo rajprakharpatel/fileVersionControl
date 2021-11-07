@@ -2,7 +2,7 @@ var express = require("express");
 var router = express.Router();
 
 /* GET users listing. */
-router.get("/", (req, res, next) => {
+router.get("/", (req, res, _next) => {
   res.render('base', {title:"User Login"});
 });
 
@@ -14,8 +14,8 @@ const credential = {
 //login user
 router.post("/login", (req, res) => {
   if (
-    req.body.email == credential.email &&
-    req.body.password == credential.password
+    req.body.email === credential.email &&
+    req.body.password === credential.password
   ) {
     req.session.user = req.body.email;
     res.redirect('/dashboard');
