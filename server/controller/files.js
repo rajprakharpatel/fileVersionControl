@@ -7,7 +7,7 @@ exports.upload = (req, res) => {
 		hashedValue: req.body.hashedValue,
 		fileContent: req.body.fileContent,
 		version: req.body.version,
-		lastModified: req.body.lastModified,
+		lastModified: new Date(),
 	};
 	const file = new File(originalFile);
 	file.save().then(() => {
@@ -19,7 +19,7 @@ exports.upload = (req, res) => {
 }
 
 // retrieve list of all files
-exports.list = (req, res) => {
+exports.list = (_req, res) => {
 	const query = File.find({});
 	query
 		.exec()
@@ -33,11 +33,25 @@ exports.list = (req, res) => {
 
 // download a file
 exports.download = (req, res) => {
-	res.send("To implement download")
+	const query = File.find({fileName: req.query.name, version: req.query.version})
+	query
+		.exec()
+		.then((files) => {
+			const fileData = JSON.stringify(files[0].fileContent);
+			// console.log(fileData);
+			res.set({"Content-Disposition":`attachment; filename=${files[0].fileName}`});
+			res.status(200).send(fileData);
+			// res.status(200).json(files);
+		})
+		.catch((error) => {
+			res.status(500).send(error);
+		});
+
+// 	res.send("To implement download")
 }
 
 // delete a file
-exports.delete = (req, res) => {
+exports.delete = (_req, res) => {
 	res.send("To implement delete")
 }
 

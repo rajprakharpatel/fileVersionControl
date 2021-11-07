@@ -45,7 +45,7 @@ app.use("/dashboard", dashboardRouter);
 app.use("/", loginRouter);
 app.use("/api", apiRouter)
 app.get("*", (_req, res) => {
-	res.sendFile(path.join(__dirname, "public/index.html"))
+	res.send("404")
 })
 
 // catch 404 and forward to error handler
