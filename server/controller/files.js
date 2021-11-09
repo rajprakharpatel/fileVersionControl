@@ -4,7 +4,7 @@ const File = require('../model/files');
 exports.upload = (req, res) => {
 	const originalFile = {
 		fileName: req.body.fileName,
-		hashedValue: req.body.hashedValue,
+		hashedValue: "havesomehash",
 		fileContent: req.body.fileContent,
 		version: req.body.version,
 		lastModified: new Date(),
@@ -33,13 +33,16 @@ exports.list = (_req, res) => {
 
 // download a file
 exports.download = (req, res) => {
-	const query = File.find({fileName: req.query.name, version: req.query.version})
+	const query = File.find({
+		fileName: req.query.name,
+		version: req.query.version
+	})
 	query
 		.exec()
 		.then((files) => {
 			const fileData = JSON.stringify(files[0].fileContent);
 			// console.log(fileData);
-			res.set({"Content-Disposition":`attachment; filename=${files[0].fileName}`});
+			res.set({"Content-Disposition": `attachment; filename=${files[0].fileName}`});
 			res.status(200).send(fileData);
 			// res.status(200).json(files);
 		})
@@ -52,7 +55,7 @@ exports.download = (req, res) => {
 
 // delete a file
 exports.delete = (_req, res) => {
-	res.send("To implement delete")
+	res.send("TODO: implement delete")
 }
 
 function checkServerError(res, error) {
