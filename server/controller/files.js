@@ -1,5 +1,4 @@
 const File = require("../model/files");
-const stream = require("stream");
 const crypto = require("crypto");
 const fs = require("fs");
 
@@ -10,20 +9,27 @@ exports.upload = (req, res) => {
     name: req.body.file.originalFilename,
     hash: hash(fileBuffer),
     file: { data: fileBuffer, contentType: req.body.file.type },
-    // TODO: change verison to number
-    version: "nyi2",
+    version: 1,
     lastModified: new Date(),
   };
-  const file = new File(originalFile);
-  file
-    .save()
-    .then(() => {
-      res.status(201).json(file);
-      console.log("file created successfully!");
+  checkDuplicate(originalFile)
+    .then((result) => {
+      // console.log("result: ", result);
+      if (result) {
+        res.status(409).send("Duplicate File");
+      } else {
+        const file = new File(originalFile);
+        file
+          .save()
+          .then(() => {
+            res.status(201).json(file);
+            // console.log("file uploaded successfully!");
+          })
+          .catch((error) => {
+            checkServerError(res, error);
+          });
+      }
     })
-    .catch((error) => {
-      checkServerError(res, error);
-    });
 };
 
 const hash = (fileBuffer) => {
@@ -32,6 +38,33 @@ const hash = (fileBuffer) => {
 
   const hex = hashSum.digest("hex");
   return hex;
+};
+
+// check if file already exists
+const checkDuplicate = (newFile) => {
+  // console.log("checkDuplicate");
+  const query = File.find({ name: newFile.name });
+  return query
+    .exec()
+    .then((files) => {
+      if (files.length == 0) {
+        return false;
+      }
+      var lhash = "";
+      var lversion = 0;
+      files.forEach((file) => {
+        if (lversion < file.version) {
+          lversion = file.version;
+          lhash = file.hash;
+        }
+      });
+      if (lhash == newFile.hash) return true;
+			newFile.version++;
+      return false;
+    })
+    .catch((error) => {
+      res.status(500).send(error);
+    });
 };
 
 // retrieve list of all files
@@ -75,7 +108,7 @@ exports.delete = (req, res) => {
   }).then((file) => {
     if (!checkFound(res, file)) return;
     res.status(200).json(file);
-		console.log("File deleted succesfully");
+    console.log("File deleted succesfully");
   });
 };
 

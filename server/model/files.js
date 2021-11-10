@@ -15,7 +15,7 @@ const fileSchema = new Schema(
       contentType: { type: String, required: true },
     },
     version: {
-      type: String,
+      type: Number,
       required: true,
     },
     lastModified: {

@@ -10,63 +10,76 @@ const uploadURL = `/api/upload`;
 // import db from "../../config/env/dev.js";
 
 dropZone.addEventListener("dragover", (e) => {
-    e.preventDefault();
+  e.preventDefault();
 
-    if (!dropZone.classList.contains("dragged")) {
-        dropZone.classList.add("dragged")
-    }
+  if (!dropZone.classList.contains("dragged")) {
+    dropZone.classList.add("dragged");
+  }
 });
 
 dropZone.addEventListener("dragleave", () => {
-    dropZone.classList.remove("dragged");
-}); 
+  dropZone.classList.remove("dragged");
+});
 
 dropZone.addEventListener("drop", (e) => {
-    e.preventDefault();
-    dropZone.classList.remove("dragged");
-    const files = e.dataTransfer.files;
-    console.log(files);
-    if (files.length){
-        fileInput.files = files;
-        uploadFile();
-    }
+  e.preventDefault();
+  dropZone.classList.remove("dragged");
+  const files = e.dataTransfer.files;
+  // console.log(files);
+  if (files.length) {
+    fileInput.files = files;
+    uploadFile();
+  }
 });
 
 fileInput.addEventListener("change", () => {
-    uploadFile();
+  uploadFile();
 });
 
 browseBtn.addEventListener("click", () => {
-    fileInput.click();
+  fileInput.click();
 });
 
 const uploadFile = () => {
+  const file = fileInput.files[0];
+  const formData = new FormData();
+  formData.append("file", file);
 
-    const file = fileInput.files[0];
-    const formData = new FormData();
-    formData.append("file", file);
+  const xhr = new XMLHttpRequest();
 
-    const xhr = new XMLHttpRequest();
-    xhr.onreadystatechange = () => {
-        if (xhr.readyState === XMLHttpRequest.DONE) {
-            console.log(xhr.response);
-						alert("File uploaded successfully");
-						window.location.reload();
+  xhr.onreadystatechange = () => {
+    if (xhr.readyState === XMLHttpRequest.DONE) {
+      try {
+        if (JSON.parse(xhr.response).code == 16) {
+          alert("File too large");
+					window.location.reload();
+          return;
         }
-    };
+      } catch (e) {
+        console.log(e);
+      }
+      if (xhr.status == 409) {
+        alert("File already exists");
+      } else {
+        alert("File upload succesfull");
+      }
+      window.location.reload();
+    }
+  };
 
-    xhr.upload.onprogress = updateProgress;
+  xhr.onerror = function () {
+    alert("Network Error");
+  };
 
-    xhr.open("POST", uploadURL);
-    xhr.send(formData);
+  xhr.upload.onprogress = updateProgress;
 
+  xhr.open("POST", uploadURL);
+  xhr.send(formData);
 };
 
 const updateProgress = (e) => {
-    const percent = Math.round((e.loaded / e.total) * 100);
-    // console.log(percent);
-    bgProgress.style.width = `${percent}%`
-    percentDiv.innerText = percent;
-}
-
-// console.log(db);
+  const percent = Math.round((e.loaded / e.total) * 100);
+  // console.log(percent);
+  bgProgress.style.width = `${percent}%`;
+  percentDiv.innerText = percent;
+};

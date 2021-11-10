@@ -11,10 +11,6 @@ fetch(url)
     console.log(err);
   });
 
-function dele() {
-  console.log("deleted");
-}
-
 function appendData(data) {
   var mainTable = document.getElementById("tbody");
   for (var i = 0; i < data.length; i++) {
