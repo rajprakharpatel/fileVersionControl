@@ -3,10 +3,10 @@ const browseBtn = document.querySelector(".browseBtn");
 const fileInput = document.querySelector("#fileInput");
 
 const bgProgress = document.querySelector(".bg-progress");
-const percentDiv = document.querySelector("#percent")
+const percentDiv = document.querySelector("#percent");
 
 // const host = "https://innshare.herokuapp.com/"
-// const uploadURL = `${host}api/files`;
+const uploadURL = `/api/upload`;
 // import db from "../../config/env/dev.js";
 
 dropZone.addEventListener("dragover", (e) => {
@@ -44,12 +44,14 @@ const uploadFile = () => {
 
     const file = fileInput.files[0];
     const formData = new FormData();
-    formData.append("myfile", file);
+    formData.append("file", file);
 
     const xhr = new XMLHttpRequest();
     xhr.onreadystatechange = () => {
         if (xhr.readyState === XMLHttpRequest.DONE) {
             console.log(xhr.response);
+						alert("File uploaded successfully");
+						window.location.reload();
         }
     };
 
@@ -62,7 +64,7 @@ const uploadFile = () => {
 
 const updateProgress = (e) => {
     const percent = Math.round((e.loaded / e.total) * 100);
-    console.log(percent);
+    // console.log(percent);
     bgProgress.style.width = `${percent}%`
     percentDiv.innerText = percent;
 }

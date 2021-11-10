@@ -13,7 +13,5 @@ const env = {
 	PORT: process.env.PORT,
 	COSMOS_DB_URI: process.env.COSMOS_DB_URI
 }
-console.log(process.env.EDITOR);
-console.log(env);
 
 module.exports = env

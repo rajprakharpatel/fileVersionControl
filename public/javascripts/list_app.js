@@ -11,9 +11,16 @@ fetch(url)
     console.log(err);
   });
 
+function dele() {
+  console.log("deleted");
+}
+
 function appendData(data) {
   var mainTable = document.getElementById("tbody");
   for (var i = 0; i < data.length; i++) {
+    if (data[i].name == undefined) {
+      continue;
+    }
     var tr = document.createElement("tr");
     var td1 = document.createElement("td");
     var td2 = document.createElement("td");
@@ -23,12 +30,25 @@ function appendData(data) {
     var download = document.createElement("a");
     var del = document.createElement("a");
     download.className = "btn btn-success";
-    download.href = `/api/download?name=${data[i].fileName}&version=${data[i].version}`;
+    download.href = `/api/download?name=${data[i].name}&version=${data[i].version}`;
     download.innerHTML = "Download";
+    const delurl = `/api/delete?name=${data[i].name}&version=${data[i].version}`;
     del.className = "btn btn-danger";
-    del.href = "/api/delete";
+    // del.href = "/api/delete";
+    del.onclick = function () {
+      fetch(delurl, {
+        method: "DELETE",
+      })
+        .then((res) => res.json)
+        .then((data) => {
+          alert("File Deleted Succesfully");;
+					window.location.reload();
+        })
+        .catch((err) => console.log(err));
+    };
+
     del.innerHTML = "Delete";
-    td1.innerHTML = data[i].fileName;
+    td1.innerHTML = data[i].name;
     td2.innerHTML = data[i].version;
     td3.innerHTML = data[i].lastModified;
     tr.appendChild(td1);

@@ -2,17 +2,17 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 const fileSchema = new Schema(
   {
-    fileName: {
+    name: {
       type: String,
       required: true,
     },
-    hashedValue: {
+    hash: {
       type: String,
       required: true,
     },
-    fileContent: {
-      type: String,
-      required: true,
+    file: {
+      data: { type: Buffer, required: true },
+      contentType: { type: String, required: true },
     },
     version: {
       type: String,
