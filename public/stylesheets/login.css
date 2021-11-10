@@ -1,24 +1,41 @@
 @import url('https://fonts.googleapis.com/css2?family=Raleway&display=swap');
 
-body{
+body {
     font-family: 'Raleway', sans-serif;
-    background-image: url('/images/login-bg.jpg');
+    background-image: url('https://t3.ftcdn.net/jpg/03/55/60/70/360_F_355607062_zYMS8jaz4SfoykpWz5oViRVKL32IabTP.jpg');
     background-size: cover;
-    background-repeat: no-repeat;
 }
 
-.center-div{
+.center-div {
     padding-top: 10%;
 }
 
-.btn.btn-success{
+.btn.btn-success {
     padding: .4em 2em;
 }
 
-form{
+form {
     padding: 0 3em;
 }
 
-#login .title > span {
+.container {
+    background: #fff;
+    width: 300px;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px 0px #000;
+}
+
+#login .title>span {
     font-size: .8em;
 }
+
+/* Style inputs, select elements and textareas */
+input[type=text], select, textarea{
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    resize: vertical;
+  }
