@@ -2,9 +2,9 @@ const createError = require("http-errors");
 const express = require("express");
 const session = require("express-session");
 const path = require("path");
-const cookieParser = require("cookie-parser");
 const logger = require("morgan");
-const connectdb = require("./server/database/connection");
+const connectDB = require("./server/database/connection");
+const env = require('./config/env')
 
 const formData = require("express-form-data")
 const os = require("os");
@@ -12,7 +12,6 @@ const os = require("os");
 const dashboardRouter = require("./server/routes/dashboard");
 const loginRouter = require("./server/routes/login");
 const apiRouter = require("./server/routes/api");
-// const bodyParser = require("body-parser");
 const { v4: uuidv4 } = require("uuid");
 
 const app = express();
@@ -48,10 +47,10 @@ app.use(
 app.use(logger("combined"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(cookieParser());
 
-// connect to cosmosbd database
-connectdb();
+// connect to cosmosDB database
+connectDB(env.COSMOS_DB_URI)
+  .then(() => console.log("\x1b[1;32mConnection to CosmosDB successful\x1b[0m"))
 
 // serve static files
 app.use(express.static(path.join(__dirname, "public")));

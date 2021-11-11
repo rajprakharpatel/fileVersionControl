@@ -33,7 +33,7 @@ server.listen(port);
 /**
  * Notify port number
  */
-console.log(`Server is running on http://localhost:${port}`);
+console.log(`\x1b[1;34mServer is running on http://localhost:${port}\x1b[0m`);
 
 /**
  * Normalize a port into a number, string, or false.
@@ -73,9 +73,11 @@ function onError(error) {
     case 'EACCES':
       console.error(bind + ' requires elevated privileges');
       process.exit(1);
+      break;
     case 'EADDRINUSE':
       console.error(bind + ' is already in use');
       process.exit(1);
+      break;
     default:
       throw error;
   }

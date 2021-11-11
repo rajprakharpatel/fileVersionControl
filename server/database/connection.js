@@ -1,16 +1,13 @@
 const mongoose = require('mongoose')
 mongoose.Promise = global.Promise;
-const env = require('../../config/env')
 
-async function connectDB() {
+async function connectDB(uri, callback) {
 	// mongodb connection string
 	try {
-		const res = await mongoose.connect(env.COSMOS_DB_URI, {
+		await mongoose.connect(uri, {
 			useNewUrlParser: true,
 			useUnifiedTopology: true,
-		});
-		console.log('Connection to CosmosDB succesfull');
-		return res
+		}, callback)
 	} catch (err) {
 		console.log(err);
 		process.exit(1);
