@@ -54,12 +54,13 @@ const checkDuplicate = (newFile) => {
       var lversion = 0;
       files.forEach((file) => {
         if (lversion < file.version) {
+					console.log(file.version);
           lversion = file.version;
           lhash = file.hash;
         }
       });
       if (lhash == newFile.hash) return true;
-			newFile.version++;
+			newFile.version = lversion + 1;
       return false;
     })
     .catch((error) => {
