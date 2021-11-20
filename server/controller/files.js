@@ -137,7 +137,7 @@ exports.delete = (req, res) => {
 		const blobClient = containerClient.getBlobClient(blobName);
 		const response = await blobClient.deleteIfExists();
 		if (response.succeeded === false){
-			console.err("File deleted from database but not storage");
+			console.error("File deleted from database but not storage");
 		}
     res.status(200).json(file);
     console.log("File deleted succesfully");
