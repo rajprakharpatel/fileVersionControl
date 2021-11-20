@@ -72,6 +72,7 @@ const checkDuplicate = (newFile) => {
       var lversion = 0;
       files.forEach((file) => {
         if (lversion < file.version) {
+					console.log(file.version);
           lversion = file.version;
           lhash = file.hash;
         }
