@@ -14,6 +14,8 @@ const loginRouter = require("./server/routes/login");
 const apiRouter = require("./server/routes/api");
 const { v4: uuidv4 } = require("uuid");
 
+const pipeline = require("./server/storage/files")
+
 const app = express();
 
 // view engine setup
@@ -47,6 +49,7 @@ app.use(
 app.use(logger("combined"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
 
 // connect to cosmosDB database
 connectDB(env.COSMOS_DB_URI)

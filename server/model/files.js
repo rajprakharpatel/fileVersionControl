@@ -11,7 +11,7 @@ const fileSchema = new Schema(
       required: true,
     },
     file: {
-      data: { type: Buffer, required: true },
+      blobPath: { type: String, required: false },
       contentType: { type: String, required: true },
     },
     version: {
