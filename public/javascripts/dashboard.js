@@ -50,18 +50,18 @@ const uploadFile = () => {
   xhr.onreadystatechange = () => {
     if (xhr.readyState === XMLHttpRequest.DONE) {
       try {
-        if (JSON.parse(xhr.response).code == 16) {
+        if (JSON.parse(xhr.response).code === 16) {
           alert("File too large");
-					window.location.reload();
+          window.location.reload();
           return;
         }
       } catch (e) {
         console.log(e);
       }
-      if (xhr.status == 409) {
+      if (xhr.status === 409) {
         alert("File already exists");
       } else {
-        alert("File upload succesfull");
+        alert("File upload successful");
       }
       window.location.reload();
     }

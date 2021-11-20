@@ -14,7 +14,7 @@ fetch(url)
 function appendData(data) {
   var mainTable = document.getElementById("tbody");
   for (var i = 0; i < data.length; i++) {
-    if (data[i].name == undefined) {
+    if (data[i].name === undefined) {
       continue;
     }
     var tr = document.createElement("tr");
@@ -36,7 +36,7 @@ function appendData(data) {
         method: "DELETE",
       })
         .then((res) => res.json)
-        .then((data) => {
+        .then((_data) => {
           alert("File Deleted Succesfully");;
 					window.location.reload();
         })
